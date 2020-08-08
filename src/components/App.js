@@ -1,9 +1,8 @@
 import React from 'react';
-import './App.css';
 
 function App() {
   return (
-    <div className="page">
+    <body className="page">
 
       <header className="header">
         <img className ="header__logo" src="./images/logo.svg" alt="Логотип сайта Место Россия." />
@@ -162,7 +161,7 @@ function App() {
         </div>
       </div>
 
-    </div>
+    </body>
   );
 }
 
