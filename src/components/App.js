@@ -1,37 +1,17 @@
 import React from 'react';
-import headerLogo from '../images/logo.svg';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
 
 function App() {
   return (
     <body className="page">
 
-      <header className="header">
-        <img className ="header__logo" src={headerLogo}  alt="Логотип сайта Место Россия." />
-      </header>
+      <Header />
 
-      <main className="content">
+      <Main />
 
-        <section className="profile">
-          <button className="profile__avatar-button">
-            <img className="profile__avatar" alt="Фотография пользователя" />
-          </button>
-          <div className="profile__info">
-            <h1 className="profile__name"></h1>
-            <button className="profile__edit-button button" type="button" aria-label="Изменить"></button>
-            <p className="profile__job"></p>
-          </div>
-          <button className="profile__add-button button" type="button" aria-label="Добавить"></button>
-        </section>
-
-        <section className="cards">
-
-        </section>
-
-      </main>
-
-      <footer className="footer">
-        <p className="footer__copyright">&#169;2020 Mesto Russia</p>
-      </footer>
+      <Footer />
 
       <template id="card-template">
         <article className="card">
