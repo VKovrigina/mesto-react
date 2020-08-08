@@ -1,11 +1,12 @@
 import React from 'react';
+import headerLogo from '../images/logo.svg';
 
 function App() {
   return (
     <body className="page">
 
       <header className="header">
-        <img className ="header__logo" src="./images/logo.svg" alt="Логотип сайта Место Россия." />
+        <img className ="header__logo" src={headerLogo}  alt="Логотип сайта Место Россия." />
       </header>
 
       <main className="content">
