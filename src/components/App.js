@@ -2,8 +2,10 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import ImagePopup from './ImagePopup';
 
 function App() {
+
   return (
     <body className="page">
 
@@ -39,6 +41,8 @@ function App() {
                 </div>
         </article>
       </template>
+
+      <ImagePopup />
 
       <div className="popup popup_profile popup_form">
         <div className="popup__container">
@@ -104,15 +108,6 @@ function App() {
         </div>
       </div>
 
-      <div className="popup popup_photo">
-        <div className="popup__container">
-          <button className="popup__close-button button"></button>
-          <img
-            className="popup__img"
-            alt="" />
-          <p className="popup__photo-title"></p>
-        </div>
-      </div>
 
       <div className="popup popup_delete-card popup_form">
         <div className="popup__container">
