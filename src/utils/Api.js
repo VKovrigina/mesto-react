@@ -1,4 +1,6 @@
-export default class Api {
+import {apiOptions} from './constants'
+
+class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -101,3 +103,7 @@ export default class Api {
       .catch(this._handleResponseError)
   }
 }
+
+ 
+const api = new Api(apiOptions);
+export default api;

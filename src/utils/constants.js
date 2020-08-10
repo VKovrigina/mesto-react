@@ -31,7 +31,7 @@ export const formValidationOptions = {
   inputErrorClass: 'popup__input_type_error'
 };
 
-export const apiOptions = {
+export  const apiOptions = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-13',
   headers: {
     authorization: '64f8b885-2658-44d6-bc45-dfe390bdb5b7',

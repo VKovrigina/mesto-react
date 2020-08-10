@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <body className="page">
+    <div className="page">
 
       <Header />
 
@@ -62,44 +62,40 @@ function App() {
       <ImagePopup />
 
       <PopupWithForm name='profile' title='Редактировать профиль' buttonText='Сохранить'>
-        
         <input
           type="text"
           name="name"
           className="popup__input popup__input_type_name"
           id="name-input"
           placeholder="ФИО"
-          minlength="2"
-          maxlength="40"
+          minLength="2"
+          maxLength="40"
           required />
         <span className="popup__input-error" id="name-input-error"></span>
-
         <input
           type="text"
           name="about"
           className="popup__input popup__input_type_job"
           id="job-input"
           placeholder="О себе"
-          minlength="2"
-          maxlength="200"
+          minLength="2"
+          maxLength="200"
           required />
         <span className="popup__input-error" id="job-input-error"></span>
 
       </PopupWithForm>
 
       <PopupWithForm name='place' title='Новое место' buttonText='Создать'>
-
       <input
         type="text"
         name="name"
         className="popup__input popup__input_type_title"
         id="title-input"
         placeholder="Название"
-        minlength="1"
-        maxlength="30"
+        minLength="1"
+        maxLength="30"
       required />
       <span className="popup__input-error" id="title-input-error"></span>
-
       <input
         type="url"
         name="link"
@@ -107,25 +103,19 @@ function App() {
         id="img-input"
         placeholder="Ссылка на картинку"
       required />
-      <span className="popup__input-error" id="img-input-error"></span>
-
-      </PopupWithForm>
+      <span className="popup__input-error" id="img-input-error"></span></PopupWithForm>
 
       <PopupWithForm name='delete-card' title='Вы уверены?' buttonText='Да'>
       </PopupWithForm>
 
-      <PopupWithForm name='edit-avatar' title='Сменить аватар' buttonText='Сохранить'>
-
-      <input
+      <PopupWithForm name='edit-avatar' title='Сменить аватар' buttonText='Сохранить'><input
         type="url"
         name="avatar"
         className="popup__input popup__input_type_avatar"
         id="avatar-input"
         placeholder="https://..."
         required />
-      <span className="popup__input-error" id="avatar-input-error"></span>
-
-      </PopupWithForm>
+      <span className="popup__input-error" id="avatar-input-error"></span></PopupWithForm>
 
       {/* <div className="popup popup_profile popup_form">
         <div className="popup__container">
@@ -220,7 +210,7 @@ function App() {
         </div>
       </div> */}
 
-    </body>
+    </div>
   );
 }
 
