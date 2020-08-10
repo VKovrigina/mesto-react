@@ -32,33 +32,6 @@ function App() {
 
       <Footer />
 
-      <template id="card-template">
-        <article className="card">
-                <button className="card__button-delete" type="button" aria-label="Удалить"></button>
-                <img className="card__img" alt="" />
-                <div className="card__info">
-                  <h2 className="card__title"></h2>
-                  <div className="card__likes">
-                    <button className="card__button-like" type="button" aria-label="Нравится"></button>
-                    <div className="card__num-likes"></div>
-                  </div>
-                </div>
-        </article>
-      </template>
-
-      <template id="card-template-defaut">
-        <article className="card">
-                <img className="card__img" alt="" />
-                <div className="card__info">
-                  <h2 className="card__title"></h2>
-                  <div className="card__likes">
-                    <button className="card__button-like" type="button" aria-label="Нравится"></button>
-                    <div className="card__num-likes"></div>
-                  </div>
-                </div>
-        </article>
-      </template>
-
       <ImagePopup />
 
       <PopupWithForm name='profile' title='Редактировать профиль' buttonText='Сохранить'>
