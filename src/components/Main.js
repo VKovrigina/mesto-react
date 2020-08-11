@@ -10,20 +10,14 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getUserInfo()
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(data => {
-      setUserName(data.name);
-      setUserDescription(data.about);
-      setUserAvatar(data.avatar);
-    })
-  },[]);
-
-  React.useEffect(() => {
-    api.getInitialCards()
-    .then(data => {
-      console.log(data);
+      console.log(data)
+      setUserName(data[0].name);
+      setUserDescription(data[0].about);
+      setUserAvatar(data[0].avatar);
       setCards(
-        data.map(item => ({
+        data[1].map(item => ({
           id: item._id,
           name: item.name,
           link: item.link,
