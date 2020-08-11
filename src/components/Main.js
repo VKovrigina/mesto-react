@@ -2,7 +2,7 @@ import React from 'react';
 import api from '../utils/Api';
 import Card from './Card';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
   const [userName, setUserName] = React.useState();
   const [userDescription, setUserDescription] = React.useState();
@@ -12,7 +12,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(data => {
-      console.log(data)
       setUserName(data[0].name);
       setUserDescription(data[0].about);
       setUserAvatar(data[0].avatar);
@@ -45,7 +44,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
         </section>
 
         <section className="cards">{
-          cards.map(({id, ...props}) => <Card key={id} {...props}/>)
+          cards.map(({id, ...props}) => <Card key={id} {...props} onCardClick={onCardClick} />)
         }</section>
 
     </main>
