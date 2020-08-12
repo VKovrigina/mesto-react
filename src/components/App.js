@@ -13,28 +13,28 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState();
 
   function handleEditAvatarClick() {
-    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
 
   function handleEditProfileClick() {
-    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
   }
 
   function handleAddPlaceClick() {
-    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
   }
 
   function handleCardClick(name, link) {
     setSelectedCard(
       {name: name,
-        link: link})
+      link: link})
   }
   
   function closeAllPopups() {
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setSelectedCard(null);
+    setTimeout(setIsEditProfilePopupOpen, 500, false);
+    setTimeout(setIsAddPlacePopupOpen, 500, false);
+    setTimeout(setIsEditAvatarPopupOpen, 500, false);
+    setTimeout(setSelectedCard, 500, null);
   }
 
   return (
@@ -43,9 +43,9 @@ function App() {
       <Header />
 
       <Main 
-        onEditAvatar={handleEditAvatarClick}
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
+      onEditAvatar={handleEditAvatarClick}
+      onEditProfile={handleEditProfileClick}
+      onAddPlace={handleAddPlaceClick}
       onCardClick={handleCardClick}/>
 
       <Footer />
