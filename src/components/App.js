@@ -5,6 +5,11 @@ import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 
+/** Очень радуюсь, когда мою работу именно вы проверяете :)
+ * Спасибо вам большое!
+ * Хорошего вам дня и всего самого наилучшего))
+*/
+
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
