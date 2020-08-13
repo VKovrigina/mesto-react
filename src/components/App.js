@@ -31,9 +31,9 @@ function App() {
   }
   
   function closeAllPopups() {
-    setTimeout(setIsEditProfilePopupOpen, 500, false);
-    setTimeout(setIsAddPlacePopupOpen, 500, false);
-    setTimeout(setIsEditAvatarPopupOpen, 500, false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
     setTimeout(setSelectedCard, 500, null);
   }
 
@@ -52,8 +52,8 @@ function App() {
 
       {selectedCard && <ImagePopup card={selectedCard} onClose={closeAllPopups}/>}
 
-      {isEditProfilePopupOpen && <PopupWithForm
-        name='profile' title='Редактировать профиль' buttonText='Сохранить' onClose={closeAllPopups}>
+      <PopupWithForm
+        name='profile' title='Редактировать профиль' buttonText='Сохранить' onClose={closeAllPopups} isOpen={isEditProfilePopupOpen}>
         <input
           type="text"
           name="name"
@@ -74,10 +74,10 @@ function App() {
           maxLength="200"
           required />
         <span className="popup__input-error" id="job-input-error"></span>
-      </PopupWithForm>}
+      </PopupWithForm>
 
-      {isAddPlacePopupOpen && <PopupWithForm 
-        name='place' title='Новое место' buttonText='Создать' onClose={closeAllPopups}>
+      <PopupWithForm 
+        name='place' title='Новое место' buttonText='Создать' onClose={closeAllPopups} isOpen={isAddPlacePopupOpen}>
         <input
           type="text"
           name="name"
@@ -96,13 +96,13 @@ function App() {
           placeholder="Ссылка на картинку"
         required />
         <span className="popup__input-error" id="img-input-error"></span>
-      </PopupWithForm>}
+      </PopupWithForm>
 
       {/* <PopupWithForm name='delete-card' title='Вы уверены?' buttonText='Да'>
       </PopupWithForm> */}
 
-      {isEditAvatarPopupOpen && <PopupWithForm 
-        name='edit-avatar' title='Сменить аватар' buttonText='Сохранить' onClose={closeAllPopups}>
+      <PopupWithForm 
+        name='edit-avatar' title='Сменить аватар' buttonText='Сохранить' onClose={closeAllPopups} isOpen={isEditAvatarPopupOpen}>
         <input
         type="url"
         name="avatar"
@@ -111,7 +111,7 @@ function App() {
         placeholder="https://..."
         required />
         <span className="popup__input-error" id="avatar-input-error"></span>
-      </PopupWithForm>}
+      </PopupWithForm>
 
     </div>
   );
