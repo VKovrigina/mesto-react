@@ -1,25 +1,15 @@
 import React from 'react';
 
-function ImagePopup({card, onClose}) {
-
-  React.useEffect(() => {
-    const thisPopup = document.querySelector(`.popup_photo`);
-    thisPopup.classList.add('popup_open');
-  }, [])
-
-  function removeOpenClass() {
-    const thisPopup = document.querySelector(`.popup_photo`);
-    thisPopup.classList.remove('popup_open');
-  }
+function ImagePopup({card, onClose, isOpen}) {
 
   return (
-    <div className="popup popup_photo">
+    <div className={`popup popup_photo ${isOpen && `popup_open`}`}>
       <div className="popup__container">
         <button 
           className="popup__close-button button"
           type="button" 
           aria-label="Закрыть"
-          onClick={() => {onClose(); removeOpenClass()}}>
+          onClick={onClose}>
         </button>
         <img
           className="popup__img"

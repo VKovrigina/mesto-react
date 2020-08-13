@@ -10,31 +10,33 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState();
+  const [isPhotoPopupOpen, setIsPhotoPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
 
   function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+    setIsEditAvatarPopupOpen(true);
   }
 
   function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+    setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleCardClick(name, link) {
     setSelectedCard(
       {name: name,
-      link: link})
+      link: link});
+    setIsPhotoPopupOpen(true);
   }
   
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setTimeout(setSelectedCard, 500, null);
+    setIsPhotoPopupOpen(false);
   }
 
   return (
@@ -50,7 +52,7 @@ function App() {
 
       <Footer />
 
-      {selectedCard && <ImagePopup card={selectedCard} onClose={closeAllPopups}/>}
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpen={isPhotoPopupOpen}/>
 
       <PopupWithForm
         name='profile' title='Редактировать профиль' buttonText='Сохранить' onClose={closeAllPopups} isOpen={isEditProfilePopupOpen}>
