@@ -2,7 +2,8 @@ import React from "react";
 
 function Card(props) {
   console.log(props)
-  const { onCardClick, onCardLike, link, name, _id, likes, owner, userId } = props;
+  const { onCardClick, onCardLike, onCardDelete, link, name, _id, likes, owner, userId } = props;
+
   function handleClick() {
     onCardClick(name, link);
   }
@@ -11,13 +12,17 @@ function Card(props) {
     onCardLike(_id, likes);
   }
 
+  function handleDeleteClick() {
+    onCardDelete(_id);
+  }
+
   const isLiked = likes.some(i => i._id === userId);
 
   const isOwn = owner._id === userId;
 
   return (
     <article className="card">
-      {isOwn && <button className="card__button-delete" type="button" aria-label="Удалить"></button>}
+      {isOwn && <button className="card__button-delete" type="button" onClick={handleDeleteClick} aria-label="Удалить"></button>}
       <img className="card__img" alt={name} src={link} onClick={handleClick} />
       <div className="card__info">
         <h2 className="card__title">{name}</h2>

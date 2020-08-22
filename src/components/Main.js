@@ -26,7 +26,16 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
       })
       .catch(err => console.error(err))
     }
-}
+  }
+
+  function handleCardDelete(cardId) {
+    api.deleteCard(cardId)
+    .then(() => {
+      const newCards = cards.filter((item) => item._id !== cardId);
+      setCards(newCards);
+    })
+    .catch(err => console.error(err))
+  }
 
   return (
     <main className="content">
@@ -47,7 +56,13 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
         <section className="cards">
           { cards.map((card) => 
-        <Card key={card._id} onCardClick={onCardClick} onCardLike={handleCardLike} {...card} userId={currentUser.userInfo._id} />)}
+        <Card 
+          key={card._id}
+          onCardClick={onCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          {...card}
+          userId={currentUser.userInfo._id} />)}
         </section>
 
     </main>
