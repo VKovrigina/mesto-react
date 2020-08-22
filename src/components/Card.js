@@ -2,10 +2,15 @@ import React from "react";
 
 function Card(props) {
   console.log(props)
-  const { onCardClick, link, name, likes, owner, userId } = props;
+  const { onCardClick, onCardLike, link, name, _id, likes, owner, userId } = props;
   function handleClick() {
     onCardClick(name, link);
   }
+
+  function handleLikeClick() {
+    onCardLike(_id, likes);
+  }
+
   const isLiked = likes.some(i => i._id === userId);
 
   const isOwn = owner._id === userId;
@@ -17,7 +22,9 @@ function Card(props) {
       <div className="card__info">
         <h2 className="card__title">{name}</h2>
           <div className="card__likes">
-            <button className={`card__button-like ${isLiked && `card__button-like_active`}`} type="button" aria-label="Нравится"></button>
+            <button className={`card__button-like ${isLiked && `card__button-like_active`}`} 
+            type="button" aria-label="Нравится"
+            onClick={handleLikeClick}></button>
             <div className="card__num-likes">{likes.length}</div>
           </div>
       </div>
