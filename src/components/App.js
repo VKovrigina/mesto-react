@@ -4,15 +4,28 @@ import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
+import api from '../utils/api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   // Стейт, отвечающий за данные текущего пользователя
-  const [currentUser, setCurrentUser] = React.useState('');
+  const [currentUser, setCurrentUser] = React.useState({});
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+
+  React.useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(data => {
+      setCurrentUser({
+        userInfo: data[0],
+        cards: data[1]
+      });
+    })
+    .catch(err => console.error(err))
+  },[]);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -41,6 +54,7 @@ function App() {
   }
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
 
       <Header />
@@ -117,6 +131,7 @@ function App() {
       </PopupWithForm>
 
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 
