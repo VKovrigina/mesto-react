@@ -5,13 +5,9 @@ import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 
-/** Очень радуюсь, когда мою работу именно вы проверяете :)
- * Спасибо вам большое!
- * Хорошего вам дня и всего самого наилучшего))
-*/
-
 function App() {
-
+  // Стейт, отвечающий за данные текущего пользователя
+  const [currentUser, setCurrentUser] = React.useState('');
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
