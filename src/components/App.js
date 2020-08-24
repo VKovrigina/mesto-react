@@ -4,6 +4,7 @@ import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -53,6 +54,23 @@ function App() {
     setIsPhotoPopupOpen(false);
   }
 
+  function handleUpdateUser(values) {
+    api.editProfile(values)
+    .then(res => {
+      setCurrentUser({
+        userInfo: {
+          ...userInfo,
+          name: res.name,
+          about: res.about
+        },
+        ...cards
+      });
+    })
+    .catch(err => console.error(err))
+
+    closeAllPopups();
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
@@ -65,11 +83,19 @@ function App() {
       onAddPlace={handleAddPlaceClick}
       onCardClick={handleCardClick}/>}
 
+      { currentUser && <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}/>
+      }
+
       <Footer />
 
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpen={isPhotoPopupOpen}/>
+      <ImagePopup card={selectedCard}
+      onClose={closeAllPopups}
+      isOpen={isPhotoPopupOpen}/>
 
-      <PopupWithForm
+      {/* <PopupWithForm
         name='profile' title='Редактировать профиль' buttonText='Сохранить' onClose={closeAllPopups} isOpen={isEditProfilePopupOpen}>
         <input
           type="text"
@@ -91,7 +117,7 @@ function App() {
           maxLength="200"
           required />
         <span className="popup__input-error" id="job-input-error"></span>
-      </PopupWithForm>
+      </PopupWithForm> */}
 
       <PopupWithForm 
         name='place' title='Новое место' buttonText='Создать' onClose={closeAllPopups} isOpen={isAddPlacePopupOpen}>
