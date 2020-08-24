@@ -11,6 +11,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 function App() {
 
   const [currentUser, setCurrentUser] = React.useState(null);
+  const [cards, setCards] = React.useState(null); 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -20,10 +21,8 @@ function App() {
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(data => {
-      setCurrentUser({
-        userInfo: data[0],
-        cards: data[1]
-      });
+      setCurrentUser(data[0]);
+      setCards(data[1]);
     })
     .catch(err => console.error(err))
   },[]);
@@ -58,12 +57,9 @@ function App() {
     api.editProfile(values)
     .then(res => {
       setCurrentUser({
-        userInfo: {
-          ...userInfo,
-          name: res.name,
-          about: res.about
-        },
-        ...cards
+        ...currentUser,
+        name: res.name,
+        about: res.about
       });
     })
     .catch(err => console.error(err))
@@ -77,11 +73,12 @@ function App() {
 
       <Header />
 
-      { currentUser && <Main 
+      { currentUser && cards && <Main 
       onEditAvatar={handleEditAvatarClick}
       onEditProfile={handleEditProfileClick}
       onAddPlace={handleAddPlaceClick}
-      onCardClick={handleCardClick}/>}
+      onCardClick={handleCardClick}
+      initialCards={cards}/>}
 
       { currentUser && <EditProfilePopup
         isOpen={isEditProfilePopupOpen}

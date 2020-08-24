@@ -3,14 +3,14 @@ import Card from './Card';
 import api from '../utils/api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, initialCards}) {
 
   const currentUser = React.useContext(CurrentUserContext);
-  const [cards, setCards] = React.useState(currentUser.cards); 
-  console.log(currentUser.userInfo);
+  const [cards, setCards] = React.useState(initialCards); 
+  console.log(currentUser);
 
   function handleCardLike(cardId, cardLikes) {
-    const isLiked = cardLikes.some(i => i._id === currentUser.userInfo._id);
+    const isLiked = cardLikes.some(i => i._id === currentUser._id);
     if (isLiked) {
       api.deleteLike(cardId)
       .then(newCard => {
@@ -42,13 +42,13 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
         <section className="profile">
           <button className="profile__avatar-button" onClick={onEditAvatar}>
-            <img className="profile__avatar" alt="Фотография пользователя" src={currentUser.userInfo && currentUser.userInfo.avatar}/>
+            <img className="profile__avatar" alt="Фотография пользователя" src={currentUser && currentUser.avatar}/>
           </button>
           <div className="profile__info">
-            <h1 className="profile__name">{currentUser.userInfo && currentUser.userInfo.name}</h1>
+            <h1 className="profile__name">{currentUser && currentUser.name}</h1>
             <button className="profile__edit-button button" type="button" aria-label="Изменить" 
             onClick={onEditProfile}></button>
-            <p className="profile__job">{currentUser.userInfo && currentUser.userInfo.about}</p>
+            <p className="profile__job">{currentUser && currentUser.about}</p>
           </div>
           <button className="profile__add-button button" type="button" aria-label="Добавить" 
           onClick={onAddPlace}></button>
@@ -62,7 +62,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
           {...card}
-          userId={currentUser.userInfo._id} />)}
+          userId={currentUser._id} />)}
         </section>
 
     </main>
