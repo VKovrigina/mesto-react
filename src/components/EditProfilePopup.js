@@ -28,7 +28,7 @@ function EditProfilePopup({onClose, isOpen, onUpdateUser}) {
           name: name,
           about: description
         });
-      }
+    }
 
     return (
     <PopupWithForm

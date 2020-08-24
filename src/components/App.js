@@ -5,6 +5,7 @@ import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -67,12 +68,26 @@ function App() {
     closeAllPopups();
   }
 
+  function handleUpdateAvatar(values) {
+    api.editAvatar(values)
+    .then(res => {
+      setCurrentUser({
+        ...currentUser,
+        avatar: res.avatar
+      });
+    })
+    .catch(err => console.error(err))
+
+    closeAllPopups();
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
 
       <Header />
 
+      {/** MAIN */}
       { currentUser && cards && <Main 
       onEditAvatar={handleEditAvatarClick}
       onEditProfile={handleEditProfileClick}
@@ -80,10 +95,18 @@ function App() {
       onCardClick={handleCardClick}
       initialCards={cards}/>}
 
+      {/** EditProfilePopup */}
       { currentUser && <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}/>
+      }
+
+      {/** EditAvatarPopup */}
+      { currentUser && <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}/>
       }
 
       <Footer />
@@ -91,30 +114,6 @@ function App() {
       <ImagePopup card={selectedCard}
       onClose={closeAllPopups}
       isOpen={isPhotoPopupOpen}/>
-
-      {/* <PopupWithForm
-        name='profile' title='Редактировать профиль' buttonText='Сохранить' onClose={closeAllPopups} isOpen={isEditProfilePopupOpen}>
-        <input
-          type="text"
-          name="name"
-          className="popup__input popup__input_type_name"
-          id="name-input"
-          placeholder="ФИО"
-          minLength="2"
-          maxLength="40"
-          required />
-        <span className="popup__input-error" id="name-input-error"></span>
-        <input
-          type="text"
-          name="about"
-          className="popup__input popup__input_type_job"
-          id="job-input"
-          placeholder="О себе"
-          minLength="2"
-          maxLength="200"
-          required />
-        <span className="popup__input-error" id="job-input-error"></span>
-      </PopupWithForm> */}
 
       <PopupWithForm 
         name='place' title='Новое место' buttonText='Создать' onClose={closeAllPopups} isOpen={isAddPlacePopupOpen}>
@@ -141,17 +140,6 @@ function App() {
       {/* <PopupWithForm name='delete-card' title='Вы уверены?' buttonText='Да'>
       </PopupWithForm> */}
 
-      <PopupWithForm 
-        name='edit-avatar' title='Сменить аватар' buttonText='Сохранить' onClose={closeAllPopups} isOpen={isEditAvatarPopupOpen}>
-        <input
-        type="url"
-        name="avatar"
-        className="popup__input popup__input_type_avatar"
-        id="avatar-input"
-        placeholder="https://..."
-        required />
-        <span className="popup__input-error" id="avatar-input-error"></span>
-      </PopupWithForm>
 
     </div>
     </CurrentUserContext.Provider>
