@@ -8,8 +8,8 @@ import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
-  // Стейт, отвечающий за данные текущего пользователя
-  const [currentUser, setCurrentUser] = React.useState();
+
+  const [currentUser, setCurrentUser] = React.useState(null);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);

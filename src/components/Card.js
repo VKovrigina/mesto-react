@@ -1,7 +1,6 @@
 import React from "react";
 
 function Card(props) {
-  console.log(props)
   const { onCardClick, onCardLike, onCardDelete, link, name, _id, likes, owner, userId } = props;
 
   function handleClick() {
