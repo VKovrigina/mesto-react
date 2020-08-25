@@ -1,41 +1,10 @@
 import React from 'react';
 import Card from './Card';
-import api from '../utils/api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, initialCards}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, initialCards, onCardLike, onCardDelete}) {
 
   const currentUser = React.useContext(CurrentUserContext);
-  const [cards, setCards] = React.useState(initialCards); 
-  console.log(currentUser);
-
-  function handleCardLike(cardId, cardLikes) {
-    const isLiked = cardLikes.some(i => i._id === currentUser._id);
-    if (isLiked) {
-      api.deleteLike(cardId)
-      .then(newCard => {
-        const newCards = cards.map((item) => item._id === cardId ? newCard : item);
-        setCards(newCards);
-      })
-      .catch(err => console.error(err))
-    } else {
-      api.putLike(cardId)
-      .then(newCard => {
-        const newCards = cards.map((item) => item._id === cardId ? newCard : item);
-        setCards(newCards);
-      })
-      .catch(err => console.error(err))
-    }
-  }
-
-  function handleCardDelete(cardId) {
-    api.deleteCard(cardId)
-    .then(() => {
-      const newCards = cards.filter((item) => item._id !== cardId);
-      setCards(newCards);
-    })
-    .catch(err => console.error(err))
-  }
 
   return (
     <main className="content">
@@ -55,14 +24,15 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, initialCard
         </section>
 
         <section className="cards">
-          { cards.map((card) => 
-        <Card 
+        { initialCards.map((card) => 
+          <Card 
           key={card._id}
           onCardClick={onCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardLike={onCardLike}
+          onCardDelete={onCardDelete}
           {...card}
-          userId={currentUser._id} />)}
+          userId={currentUser._id} />)
+        }
         </section>
 
     </main>
