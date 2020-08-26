@@ -9,6 +9,8 @@ import AddPlacePopup from './AddPlacePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
+//Спасибо вам большое за быструю работу!
+
 function App() {
 
   const [currentUser, setCurrentUser] = React.useState(null);
@@ -52,6 +54,28 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsPhotoPopupOpen(false);
+  }
+
+  const closePopupByEscAndOverlay = () => {
+    function handleEscClose(e) {
+      if (e.key === "Escape") {
+        closeAllPopups()
+      }
+    }
+
+    function closeByOverlay(e) {
+      if (e.target.classList.contains(`popup_open`)) {
+        closeAllPopups()
+      }
+    }
+
+    document.addEventListener('click', closeByOverlay);
+    document.addEventListener('keydown', handleEscClose);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscClose);
+      document.removeEventListener('click', closeByOverlay);
+    }
   }
 
   function handleUpdateUser(values) {
@@ -139,26 +163,30 @@ function App() {
       { currentUser && <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-        onUpdateUser={handleUpdateUser}/>
+        onUpdateUser={handleUpdateUser}
+        closeByEscAndOverlay={closePopupByEscAndOverlay}/>
       }
 
       {/** EditAvatarPopup */}
       { currentUser && <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
-        onUpdateAvatar={handleUpdateAvatar}/>
+        onUpdateAvatar={handleUpdateAvatar}
+        closeByEscAndOverlay={closePopupByEscAndOverlay}/>
       }
 
       <AddPlacePopup
       isOpen={isAddPlacePopupOpen}
       onClose={closeAllPopups}
-      onAddPlace={handleAddPlaceSubmit}/>
+      onAddPlace={handleAddPlaceSubmit}
+      closeByEscAndOverlay={closePopupByEscAndOverlay}/>
 
       <Footer />
 
       <ImagePopup card={selectedCard}
       onClose={closeAllPopups}
-      isOpen={isPhotoPopupOpen}/>
+      isOpen={isPhotoPopupOpen}
+      closeByEscAndOverlay={closePopupByEscAndOverlay}/>
 
       {/* <PopupWithForm name='delete-card' title='Вы уверены?' buttonText='Да'>
       </PopupWithForm> */}
