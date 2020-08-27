@@ -107,21 +107,23 @@ function App() {
 
   function handleCardLike(cardId, cardLikes) {
     const isLiked = cardLikes.some(i => i._id === currentUser._id);
-    if (isLiked) {
-      api.deleteLike(cardId)
-      .then(newCard => {
-        const newCards = cards.map((item) => item._id === cardId ? newCard : item);
-        setCards(newCards);
-      })
-      .catch(err => console.error(err))
-    } else {
-      api.putLike(cardId)
-      .then(newCard => {
-        const newCards = cards.map((item) => item._id === cardId ? newCard : item);
-        setCards(newCards);
-      })
-      .catch(err => console.error(err))
+
+    function generateNewCards(newCard) {
+      const newCards = cards.map((item) => item._id === cardId ? newCard : item);
+      setCards(newCards);
     }
+
+    isLiked
+    ?  api.deleteLike(cardId)
+      .then(newCard => {
+        generateNewCards(newCard)
+      })
+      .catch(err => console.error(err))
+    :  api.putLike(cardId)
+      .then(newCard => {
+        generateNewCards(newCard)
+      })
+      .catch(err => console.error(err))
   }
 
   function handleCardDelete(cardId) {
