@@ -9,7 +9,7 @@ import AddPlacePopup from './AddPlacePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-//Спасибо вам большое за быструю работу!
+//Спасибо вам большое за быструю работу и "гибкость"! Хорошего вам дня :)
 
 function App() {
 
