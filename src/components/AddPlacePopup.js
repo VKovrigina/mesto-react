@@ -6,6 +6,11 @@ function AddPlacePopup({onClose, isOpen, onAddPlace, closeByEscAndOverlay}) {
   const [namePlace, setNamePlace] = React.useState('');
   const [link, setLink] = React.useState('');
 
+  React.useEffect(() => {
+    setNamePlace('');
+    setLink('');
+  }, [onClose]);
+
   function handleInputNamePlaceChange(e) {
     setNamePlace(e.target.value);
   }
