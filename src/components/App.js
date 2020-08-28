@@ -6,6 +6,7 @@ import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeleteCardPopup from './DeleteCardPopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -19,6 +20,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = React.useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
 
   React.useEffect(() => {
@@ -48,12 +50,19 @@ function App() {
       link: link});
     setIsPhotoPopupOpen(true);
   }
+
+  function handleDeleteCardClick(idCard) {
+    setSelectedCard(
+      {id: idCard});
+    setIsDeleteCardPopupOpen(true);
+  }
   
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsPhotoPopupOpen(false);
+    setIsDeleteCardPopupOpen(false);
   }
 
   const closePopupByEscAndOverlay = () => {
@@ -86,10 +95,10 @@ function App() {
         name: res.name,
         about: res.about
       });
+      closeAllPopups();
     })
     .catch(err => console.error(err))
 
-    closeAllPopups();
   }
 
   function handleUpdateAvatar(values) {
@@ -99,10 +108,10 @@ function App() {
         ...currentUser,
         avatar: res.avatar
       });
+      closeAllPopups();
     })
     .catch(err => console.error(err))
 
-    closeAllPopups();
   }
 
   function handleCardLike(cardId, cardLikes) {
@@ -131,8 +140,10 @@ function App() {
     .then(() => {
       const newCards = cards.filter((item) => item._id !== cardId);
       setCards(newCards);
+      closeAllPopups();
     })
     .catch(err => console.error(err))
+
   }
 
   function handleAddPlaceSubmit(values) {
@@ -159,7 +170,7 @@ function App() {
       onCardClick={handleCardClick}
       initialCards={cards}
       onCardLike={handleCardLike}
-      onCardDelete={handleCardDelete}/>}
+      onCardDelete={handleDeleteCardClick}/>}
 
       {/** EditProfilePopup */}
       { currentUser && <EditProfilePopup
@@ -183,16 +194,19 @@ function App() {
       onAddPlace={handleAddPlaceSubmit}
       closeByEscAndOverlay={closePopupByEscAndOverlay}/>
 
-      <Footer />
-
       <ImagePopup card={selectedCard}
       onClose={closeAllPopups}
       isOpen={isPhotoPopupOpen}
       closeByEscAndOverlay={closePopupByEscAndOverlay}/>
 
-      {/* <PopupWithForm name='delete-card' title='Вы уверены?' buttonText='Да'>
-      </PopupWithForm> */}
+      <DeleteCardPopup
+      card={selectedCard}
+      closeByEscAndOverlay={closePopupByEscAndOverlay}
+      onClose={closeAllPopups}
+      isOpen={isDeleteCardPopupOpen}
+      onDeleteCard={handleCardDelete}/>
 
+      <Footer />
 
     </div>
     </CurrentUserContext.Provider>

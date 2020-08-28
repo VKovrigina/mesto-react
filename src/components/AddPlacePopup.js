@@ -46,7 +46,7 @@ function AddPlacePopup({onClose, isOpen, onAddPlace, closeByEscAndOverlay}) {
         placeholder="Название"
         minLength="1"
         maxLength="30"
-      required />
+      required/>
       <span className="popup__input-error" id="title-input-error"></span>
       <input
         value={link}
