@@ -2,8 +2,9 @@ import React from 'react';
 
 function ImagePopup({card, onClose, isOpen, closeByEscAndOverlay}) {
 
-  React.useEffect(
+  React.useEffect(() => {
     closeByEscAndOverlay()
+  } 
   )
 
   return (
