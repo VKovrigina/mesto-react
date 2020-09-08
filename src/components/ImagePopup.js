@@ -2,9 +2,9 @@ import React from 'react';
 
 function ImagePopup({card, onClose, isOpen, closeByEscAndOverlay}) {
 
-  React.useEffect(
-    closeByEscAndOverlay()
-  )
+  React.useEffect(() => {
+    closeByEscAndOverlay();
+  })
 
   return (
     <div className={`popup popup_photo ${isOpen && `popup_open`}`}>

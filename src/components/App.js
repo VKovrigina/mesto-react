@@ -66,7 +66,7 @@ function App() {
     setIsDeleteCardPopupOpen(false);
   }
 
-  const closePopupByEscAndOverlay = () => {
+  function closePopupByEscAndOverlay() {
     function handleEscClose(e) {
       if (e.key === "Escape") {
         closeAllPopups()

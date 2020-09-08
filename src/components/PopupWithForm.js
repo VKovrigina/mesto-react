@@ -11,9 +11,9 @@ function PopupWithForm({
   closeByEscAndOverlay 
 }) {
 
-  React.useEffect(
-    closeByEscAndOverlay()
-  )
+  React.useEffect(() => {
+    closeByEscAndOverlay();
+  })
 
   return (
     <div className={`popup popup_${name} popup_form ${isOpen && `popup_open`}`}>
