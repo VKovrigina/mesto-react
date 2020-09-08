@@ -6,11 +6,9 @@ import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
-import PopupWithForm from './PopupWithForm';
+import DeleteCardPopup from './DeleteCardPopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
-//Спасибо вам большое за быструю работу и "гибкость"! Хорошего вам дня :)
 
 function App() {
 
@@ -201,15 +199,12 @@ function App() {
       isOpen={isPhotoPopupOpen}
       closeByEscAndOverlay={closePopupByEscAndOverlay}/>
 
-      <PopupWithForm
-        name='delete-card'
-        title='Вы уверены?'
-        buttonText='Да'
+      <DeleteCardPopup
         closeByEscAndOverlay={closePopupByEscAndOverlay}
         onClose={closeAllPopups}
         isOpen={isDeleteCardPopupOpen}
         onSubmit={handleCardDelete}>
-      </PopupWithForm>
+      </DeleteCardPopup>
 
       <Footer />
 

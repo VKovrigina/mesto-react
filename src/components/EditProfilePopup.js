@@ -33,8 +33,7 @@ function EditProfilePopup({onClose, isOpen, onUpdateUser, closeByEscAndOverlay})
   return (
     <PopupWithForm
       name='profile' 
-      title='Редактировать профиль' 
-      buttonText='Сохранить' 
+      title='Редактировать профиль'
       onClose={onClose} 
       isOpen={isOpen}
       onSubmit={handleSubmit}
@@ -63,6 +62,7 @@ function EditProfilePopup({onClose, isOpen, onUpdateUser, closeByEscAndOverlay})
         maxLength="200"
         required />
       <span className="popup__input-error" id="job-input-error"></span>
+      <button className="popup__form-button" type="submit" aria-label="Сохранить">Сохранить</button>
     </PopupWithForm>
   );
 }

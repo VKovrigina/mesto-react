@@ -19,7 +19,7 @@ function EditAvatarPopup({onClose, isOpen, onUpdateAvatar, closeByEscAndOverlay}
 
     return (
     <PopupWithForm 
-        name='edit-avatar' title='Сменить аватар' buttonText='Сохранить'
+        name='edit-avatar' title='Сменить аватар'
         onClose={onClose} isOpen={isOpen} onSubmit={handleSubmit}
         closeByEscAndOverlay={closeByEscAndOverlay}>
         <input
@@ -31,6 +31,7 @@ function EditAvatarPopup({onClose, isOpen, onUpdateAvatar, closeByEscAndOverlay}
         placeholder="https://..."
         required />
         <span className="popup__input-error" id="avatar-input-error"></span>
+        <button className="popup__form-button" type="submit" aria-label="Сохранить">Сохранить</button>
     </PopupWithForm>
     );
 }

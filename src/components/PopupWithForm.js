@@ -27,7 +27,6 @@ function PopupWithForm({
       <form className={`popup__form popup__form_${name}`} name={name} method="get" action="#" onSubmit={onSubmit}>
         <h2 className="popup__title">{title}</h2>
         {children}
-        <button className="popup__form-button" type="submit" aria-label={buttonText} >{buttonText}</button>
       </form>
     </div>
   </div>
