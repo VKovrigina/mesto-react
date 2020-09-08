@@ -1,6 +1,15 @@
 import React from 'react';
 
-function PopupWithForm({ name ,title ,buttonText, children, onClose, isOpen, onSubmit, closeByEscAndOverlay }) {
+function PopupWithForm({ 
+  name, 
+  title, 
+  buttonText, 
+  children, 
+  onClose, 
+  isOpen, 
+  onSubmit, 
+  closeByEscAndOverlay 
+}) {
 
   React.useEffect(
     closeByEscAndOverlay()

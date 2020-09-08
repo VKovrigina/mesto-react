@@ -6,7 +6,7 @@ import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
-import DeleteCardPopup from './DeleteCardPopup';
+import PopupWithForm from './PopupWithForm';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -22,6 +22,7 @@ function App() {
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = React.useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+  const [cardForDelete, setCardForDelete] = React.useState({});
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -52,7 +53,7 @@ function App() {
   }
 
   function handleDeleteCardClick(idCard) {
-    setSelectedCard(
+    setCardForDelete(
       {id: idCard});
     setIsDeleteCardPopupOpen(true);
   }
@@ -135,10 +136,11 @@ function App() {
       .catch(err => console.error(err))
   }
 
-  function handleCardDelete(cardId) {
-    api.deleteCard(cardId)
+  function handleCardDelete(e) {
+    e.preventDefault();
+    api.deleteCard(cardForDelete.id)
     .then(() => {
-      const newCards = cards.filter((item) => item._id !== cardId);
+      const newCards = cards.filter((item) => item._id !== cardForDelete.id);
       setCards(newCards);
       closeAllPopups();
     })
@@ -199,12 +201,15 @@ function App() {
       isOpen={isPhotoPopupOpen}
       closeByEscAndOverlay={closePopupByEscAndOverlay}/>
 
-      <DeleteCardPopup
-      card={selectedCard}
-      closeByEscAndOverlay={closePopupByEscAndOverlay}
-      onClose={closeAllPopups}
-      isOpen={isDeleteCardPopupOpen}
-      onDeleteCard={handleCardDelete}/>
+      <PopupWithForm
+        name='delete-card'
+        title='Вы уверены?'
+        buttonText='Да'
+        closeByEscAndOverlay={closePopupByEscAndOverlay}
+        onClose={closeAllPopups}
+        isOpen={isDeleteCardPopupOpen}
+        onSubmit={handleCardDelete}>
+      </PopupWithForm>
 
       <Footer />
 
