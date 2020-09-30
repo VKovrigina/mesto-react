@@ -1,30 +1,21 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
+import { useFormWithValidation } from '../hooks/useFormWithValidation';
 
 function AddPlacePopup({onClose, isOpen, onAddPlace, closeByEscAndOverlay}) {
 
-  const [namePlace, setNamePlace] = React.useState('');
-  const [link, setLink] = React.useState('');
+  const {values, handleChange, errors, isValid, resetForm} = useFormWithValidation();
 
   React.useEffect(() => {
-    setNamePlace('');
-    setLink('');
-  }, [onClose]);
-
-  function handleInputNamePlaceChange(e) {
-    setNamePlace(e.target.value);
-  }
-
-  function handleInputLinkChange(e) {
-    setLink(e.target.value);
-  }
+    resetForm();
+  }, [isOpen, resetForm]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     onAddPlace({
-      name: namePlace,
-      link: link
+      name: values.name,
+      link: values.link
     });
   }
 
@@ -36,8 +27,8 @@ function AddPlacePopup({onClose, isOpen, onAddPlace, closeByEscAndOverlay}) {
       onSubmit={handleSubmit}
       closeByEscAndOverlay={closeByEscAndOverlay}>
       <input
-        value={namePlace}
-        onChange={handleInputNamePlaceChange}
+        value={values.name || ''}
+        onChange={handleChange}
         type="text"
         name="name"
         className="popup__input popup__input_type_title"
@@ -46,18 +37,18 @@ function AddPlacePopup({onClose, isOpen, onAddPlace, closeByEscAndOverlay}) {
         minLength="1"
         maxLength="30"
       required/>
-      <span className="popup__input-error" id="title-input-error"></span>
+      <span className="popup__input-error" id="title-input-error">{errors.name || ''}</span>
       <input
-        value={link}
-        onChange={handleInputLinkChange}
+        value={values.link || ''}
+        onChange={handleChange}
         type="url"
         name="link"
         className="popup__input popup__input_type_img"
         id="img-input"
         placeholder="Ссылка на картинку"
       required />
-      <span className="popup__input-error" id="img-input-error"></span>
-      <button className="popup__form-button" type="submit" aria-label="Создать">Создать</button>
+      <span className="popup__input-error" id="img-input-error">{errors.link}</span>
+      <button className={`popup__form-button ${!isValid && 'popup__form-button_inactive'}`} type="submit" aria-label="Создать" disabled={!isValid}>Создать</button>
   </PopupWithForm>
   );
 }
