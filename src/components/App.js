@@ -6,10 +6,9 @@ import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeleteCardPopup from './DeleteCardPopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
-//Спасибо вам большое за быструю работу и "гибкость"! Хорошего вам дня :)
 
 function App() {
 
@@ -19,7 +18,9 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = React.useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+  const [cardForDelete, setCardForDelete] = React.useState({});
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -48,12 +49,19 @@ function App() {
       link: link});
     setIsPhotoPopupOpen(true);
   }
+
+  function handleDeleteCardClick(idCard) {
+    setCardForDelete(
+      {id: idCard});
+    setIsDeleteCardPopupOpen(true);
+  }
   
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsPhotoPopupOpen(false);
+    setIsDeleteCardPopupOpen(false);
   }
 
   function closePopupByEscAndOverlay() {
@@ -86,10 +94,10 @@ function App() {
         name: res.name,
         about: res.about
       });
+      closeAllPopups();
     })
     .catch(err => console.error(err))
 
-    closeAllPopups();
   }
 
   function handleUpdateAvatar(values) {
@@ -99,10 +107,10 @@ function App() {
         ...currentUser,
         avatar: res.avatar
       });
+      closeAllPopups();
     })
     .catch(err => console.error(err))
 
-    closeAllPopups();
   }
 
   function handleCardLike(cardId, cardLikes) {
@@ -126,13 +134,16 @@ function App() {
       .catch(err => console.error(err))
   }
 
-  function handleCardDelete(cardId) {
-    api.deleteCard(cardId)
+  function handleCardDelete(e) {
+    e.preventDefault();
+    api.deleteCard(cardForDelete.id)
     .then(() => {
-      const newCards = cards.filter((item) => item._id !== cardId);
+      const newCards = cards.filter((item) => item._id !== cardForDelete.id);
       setCards(newCards);
+      closeAllPopups();
     })
     .catch(err => console.error(err))
+
   }
 
   function handleAddPlaceSubmit(values) {
@@ -159,7 +170,7 @@ function App() {
       onCardClick={handleCardClick}
       initialCards={cards}
       onCardLike={handleCardLike}
-      onCardDelete={handleCardDelete}/>}
+      onCardDelete={handleDeleteCardClick}/>}
 
       {/** EditProfilePopup */}
       { currentUser && <EditProfilePopup
@@ -183,16 +194,19 @@ function App() {
       onAddPlace={handleAddPlaceSubmit}
       closeByEscAndOverlay={closePopupByEscAndOverlay}/>
 
-      <Footer />
-
       <ImagePopup card={selectedCard}
       onClose={closeAllPopups}
       isOpen={isPhotoPopupOpen}
       closeByEscAndOverlay={closePopupByEscAndOverlay}/>
 
-      {/* <PopupWithForm name='delete-card' title='Вы уверены?' buttonText='Да'>
-      </PopupWithForm> */}
+      <DeleteCardPopup
+        closeByEscAndOverlay={closePopupByEscAndOverlay}
+        onClose={closeAllPopups}
+        isOpen={isDeleteCardPopupOpen}
+        onSubmit={handleCardDelete}>
+      </DeleteCardPopup>
 
+      <Footer />
 
     </div>
     </CurrentUserContext.Provider>
