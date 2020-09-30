@@ -1,32 +1,25 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { useFormWithValidation } from '../hooks/useFormWithValidation';
 
 function EditProfilePopup({onClose, isOpen, onUpdateUser, closeByEscAndOverlay}) {
 
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
   const currentUser = React.useContext(CurrentUserContext);
+  const {values, handleChange, errors, isValid, resetForm} = useFormWithValidation()
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser, onClose]);
-
-  function handleInputNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleInputDescriptionChange(e) {
-    setDescription(e.target.value);
-  }
+    if (currentUser) {
+      resetForm(currentUser)
+    }
+  }, [currentUser, onClose, resetForm]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     onUpdateUser({
-      name: name,
-      about: description
+      name: values.name,
+      about: values.about
     });
     }
 
@@ -39,8 +32,8 @@ function EditProfilePopup({onClose, isOpen, onUpdateUser, closeByEscAndOverlay})
       onSubmit={handleSubmit}
       closeByEscAndOverlay={closeByEscAndOverlay}>
       <input
-        value={name}
-        onChange={handleInputNameChange}
+        value={values.name || ''}
+        onChange={handleChange}
         type="text"
         name="name"
         className="popup__input popup__input_type_name"
@@ -49,10 +42,10 @@ function EditProfilePopup({onClose, isOpen, onUpdateUser, closeByEscAndOverlay})
         minLength="2"
         maxLength="40"
         required />
-      <span className="popup__input-error" id="name-input-error"></span>
+      <span className="popup__input-error" id="name-input-error">{errors.name || ''}</span>
       <input
-        value={description}
-        onChange={handleInputDescriptionChange}
+        value={values.about || ''}
+        onChange={handleChange}
         type="text"
         name="about"
         className="popup__input popup__input_type_job"
@@ -61,8 +54,8 @@ function EditProfilePopup({onClose, isOpen, onUpdateUser, closeByEscAndOverlay})
         minLength="2"
         maxLength="200"
         required />
-      <span className="popup__input-error" id="job-input-error"></span>
-      <button className="popup__form-button" type="submit" aria-label="Сохранить">Сохранить</button>
+      <span className="popup__input-error" id="job-input-error">{errors.about || ''}</span>
+      <button className={`popup__form-button ${!isValid && 'popup__form-button_inactive'}`} type="submit" aria-label="Сохранить" disabled={!isValid}>Сохранить</button>
     </PopupWithForm>
   );
 }
