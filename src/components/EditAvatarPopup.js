@@ -27,7 +27,7 @@ function EditAvatarPopup({onClose, isOpen, onUpdateAvatar, closeByEscAndOverlay}
         onChange={handleChange}
         type="url"
         name="avatar"
-        className={`popup__input popup__input_type_avatar ${!isValid && 'popup__input_type_error'}`}
+        className='popup__input popup__input_type_avatar'
         id="avatar-input"
         placeholder="https://..."
         required />
