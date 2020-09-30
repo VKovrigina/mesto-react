@@ -24,7 +24,7 @@ function PopupWithForm({
         aria-label="Закрыть"
         onClick= {onClose}>
       </button>
-      <form className={`popup__form popup__form_${name}`} name={name} method="get" action="#" onSubmit={onSubmit}>
+      <form noValidate className={`popup__form popup__form_${name}`} name={name} method="get" action="#" onSubmit={onSubmit}>
         <h2 className="popup__title">{title}</h2>
         {children}
       </form>

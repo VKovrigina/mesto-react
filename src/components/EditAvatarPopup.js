@@ -4,17 +4,16 @@ import { useFormWithValidation } from '../hooks/useFormWithValidation';
 
 function EditAvatarPopup({onClose, isOpen, onUpdateAvatar, closeByEscAndOverlay}) {
     const {values, handleChange, errors, isValid, resetForm} = useFormWithValidation()
-    const inputRef = React.useRef();
 
     React.useEffect(() => {
-        inputRef.current.value = ''
-    }, [onClose]);
+        resetForm();
+    }, [onClose, resetForm, isOpen]);
 
     function handleSubmit(e) {
         e.preventDefault();
 
         onUpdateAvatar({
-          avatar: inputRef.current.value
+          avatar: values.avatar
         });
     }
 
@@ -24,15 +23,16 @@ function EditAvatarPopup({onClose, isOpen, onUpdateAvatar, closeByEscAndOverlay}
         onClose={onClose} isOpen={isOpen} onSubmit={handleSubmit}
         closeByEscAndOverlay={closeByEscAndOverlay}>
         <input
-        ref={inputRef}
+        value={values.avatar || ''}
+        onChange={handleChange}
         type="url"
         name="avatar"
-        className="popup__input popup__input_type_avatar"
+        className={`popup__input popup__input_type_avatar ${!isValid && 'popup__input_type_error'}`}
         id="avatar-input"
         placeholder="https://..."
         required />
-        <span className="popup__input-error" id="avatar-input-error"></span>
-        <button className="popup__form-button" type="submit" aria-label="Сохранить">Сохранить</button>
+        <span className="popup__input-error" id="avatar-input-error">{errors.avatar}</span>
+        <button className={`popup__form-button ${!isValid && 'popup__form-button_inactive'}`} type="submit" aria-label="Сохранить" disabled={!isValid}>Сохранить</button>
     </PopupWithForm>
     );
 }
